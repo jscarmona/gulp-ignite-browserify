@@ -36,8 +36,6 @@ var _gulpUglify = require('gulp-uglify');
 
 var _gulpUglify2 = _interopRequireDefault(_gulpUglify);
 
-var _utils = require('gulp-ignite/utils');
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
@@ -54,19 +52,18 @@ exports.default = {
   description: 'Build out the javascript files',
 
   /**
-   * Default configuration
+   * Task default configuration
    * @type {Object}
    */
   config: {
     src: './client/app/app.js',
     dest: './public/js',
     filename: 'app.js',
-    min: false,
-    env: 'local',
     options: [],
+    min: false,
     sourcemap: false,
     watch: false,
-    watchFiles: ['./client/app/**/*.js', './client/app/**/*.html']
+    watchFiles: []
   },
 
   /**
@@ -84,9 +81,7 @@ exports.default = {
    * @param  {Object} config
    * @return {Object}
    */
-  fn: function fn(config) {
-    var startTime = _utils.IGNITE_UTILS.startTime();
-
+  fn: function fn(config, end, error) {
     config.min = _yargs2.default.argv.min || config.min;
     config.sourcemap = _yargs2.default.argv.sourcemap || config.sourcemap;
     config.watch = _yargs2.default.argv.watch || config.watch;
@@ -95,10 +90,6 @@ exports.default = {
       _gulp2.default.watch(config.watchFiles, ['browserify']);
     }
 
-    return (0, _browserify2.default)(config.src, config.options).bundle().on('error', function (e) {
-      return _utils.IGNITE_UTILS.log(e.message, 'red');
-    }).pipe((0, _vinylSourceStream2.default)(config.filename)).pipe((0, _vinylBuffer2.default)()).pipe((0, _gulpIf2.default)(config.sourcemap, _gulpSourcemaps2.default.init({ loadMaps: true }))).pipe((0, _gulpIf2.default)(config.min, (0, _gulpUglify2.default)())).pipe((0, _gulpIf2.default)(config.sourcemap, _gulpSourcemaps2.default.write('./'))).pipe(_gulp2.default.dest(config.dest)).on('end', function () {
-      return _utils.IGNITE_UTILS.notify('Browserify Complete --- ' + _utils.IGNITE_UTILS.getDuration(startTime));
-    });
+    (0, _browserify2.default)(config.src, config.options).bundle().on('error', error).pipe((0, _vinylSourceStream2.default)(config.filename)).pipe((0, _vinylBuffer2.default)()).pipe((0, _gulpIf2.default)(config.sourcemap, _gulpSourcemaps2.default.init({ loadMaps: true }))).pipe((0, _gulpIf2.default)(config.min, (0, _gulpUglify2.default)())).pipe((0, _gulpIf2.default)(config.sourcemap, _gulpSourcemaps2.default.write('./'))).pipe(_gulp2.default.dest(config.dest)).on('end', end);
   }
 };
