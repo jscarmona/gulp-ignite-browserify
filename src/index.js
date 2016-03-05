@@ -8,7 +8,6 @@ import gulp from 'gulp';
 import gulpIf from 'gulp-if';
 import sourcemaps from 'gulp-sourcemaps';
 import uglify from 'gulp-uglify';
-import { IGNITE_UTILS } from 'gulp-ignite/utils';
 
 export default {
   /**
@@ -53,9 +52,7 @@ export default {
    * @param  {Object} config
    * @return {Object}
    */
-  fn(config) {
-    let startTime = IGNITE_UTILS.startTime();
-
+  fn(config, end, error) {
     config.min = yargs.argv.min || config.min;
     config.sourcemap = yargs.argv.sourcemap || config.sourcemap;
     config.watch = yargs.argv.watch || config.watch;
@@ -64,15 +61,15 @@ export default {
       gulp.watch(config.watchFiles, ['browserify']);
     }
 
-    return browserify(config.src, config.options)
-      .bundle()
-        .on('error', (e) => IGNITE_UTILS.log(e.message, 'red'))
-      .pipe(source(config.filename))
-      .pipe(buffer())
-      .pipe(gulpIf(config.sourcemap, sourcemaps.init({ loadMaps: true })))
-        .pipe(gulpIf(config.min, uglify()))
-      .pipe(gulpIf(config.sourcemap, sourcemaps.write('./')))
-      .pipe(gulp.dest(config.dest))
-        .on('end', () => IGNITE_UTILS.notify(`Browserify Complete --- ${IGNITE_UTILS.getDuration(startTime)}`));
+    browserify(config.src, config.options)
+    .bundle()
+      .on('error', error)
+    .pipe(source(config.filename))
+    .pipe(buffer())
+    .pipe(gulpIf(config.sourcemap, sourcemaps.init({ loadMaps: true })))
+      .pipe(gulpIf(config.min, uglify()))
+    .pipe(gulpIf(config.sourcemap, sourcemaps.write('./')))
+    .pipe(gulp.dest(config.dest))
+      .on('end', end);
   }
 };
