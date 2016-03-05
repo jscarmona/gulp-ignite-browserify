@@ -24,22 +24,18 @@ export default {
   description: 'Build out the javascript files',
 
   /**
-   * Default configuration
+   * Task default configuration
    * @type {Object}
    */
   config: {
     src: './client/app/app.js',
     dest: './public/js',
     filename: 'app.js',
-    min: false,
-    env: 'local',
     options: [],
+    min: false,
     sourcemap: false,
     watch: false,
-    watchFiles: [
-      `./client/app/**/*.js`,
-      `./client/app/**/*.html`
-    ],
+    watchFiles: [],
   },
 
   /**
