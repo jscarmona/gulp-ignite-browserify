@@ -62,14 +62,14 @@ export default {
     }
 
     browserify(config.src, config.options)
-    .bundle()
-      .on('error', error)
-    .pipe(source(config.filename))
-    .pipe(buffer())
-    .pipe(gulpIf(config.sourcemap, sourcemaps.init({ loadMaps: true })))
-      .pipe(gulpIf(config.min, uglify()))
-    .pipe(gulpIf(config.sourcemap, sourcemaps.write('./')))
-    .pipe(gulp.dest(config.dest))
-      .on('end', end);
+      .bundle()
+        .on('error', error)
+      .pipe(source(config.filename))
+      .pipe(buffer())
+      .pipe(gulpIf(config.sourcemap, sourcemaps.init({ loadMaps: true })))
+        .pipe(gulpIf(config.min, uglify()))
+      .pipe(gulpIf(config.sourcemap, sourcemaps.write('./')))
+      .pipe(gulp.dest(config.dest))
+        .on('end', end);
   }
 };
