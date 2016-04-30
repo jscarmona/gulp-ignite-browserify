@@ -1,14 +1,13 @@
 {
   "name": "gulp-ignite-browserify",
   "description": "A gulp ignite task for browserifing your javascript.",
-  "version": "0.0.0-semantically-released",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register",
     "test:watch": "mocha --compilers js:babel-core/register -w",
     "build": "babel src -d ./",
-    "commit": "git-cz",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "prepublish": "npm test; npm run build;"
   },
   "repository": {
     "type": "git",
@@ -46,8 +45,7 @@
     "commitizen": "2.6.1",
     "cz-conventional-changelog": "1.1.5",
     "ghooks": "1.0.3",
-    "mocha": "2.4.5",
-    "semantic-release": "^4.3.5"
+    "mocha": "2.4.5"
   },
   "config": {
     "commitizen": {
