@@ -70,15 +70,15 @@ describe('Browserify Task', () => {
     });
 
     it('should contain a `min` property', () => {
-      expect(task.help.min).to.be.a('string');
+      expect(task.help['min, -m']).to.be.a('string');
     });
 
     it('should contain a `sourcemap` property', () => {
-      expect(task.help.sourcemap).to.be.a('string');
+      expect(task.help['sourcemap, -s']).to.be.a('string');
     });
 
     it('should contain a `watch` property', () => {
-      expect(task.help.watch).to.be.a('string');
+      expect(task.help['watch, -w']).to.be.a('string');
     });
   });
 

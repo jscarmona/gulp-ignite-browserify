@@ -42,9 +42,9 @@ export default {
    * @type {Object}
    */
   help: {
-    min: 'Compress and minify the output (true|false). Default: false',
-    sourcemap: 'Enable or Disable sourcemaps (true|false). Default: false',
-    watch: 'Watch files for changes and trigger browsersync',
+    'min, -m': 'Compress and minify the output (true|false). Default: false',
+    'sourcemap, -s': 'Enable or Disable sourcemaps (true|false). Default: false',
+    'watch, -w': 'Watch files for changes and trigger browsersync',
   },
 
   /**
