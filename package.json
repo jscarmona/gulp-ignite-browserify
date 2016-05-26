@@ -8,7 +8,7 @@
     "test:watch": "mocha --compilers js:babel-core/register -w",
     "build": "babel src -d ./",
     "lint": "eslint ./src/**/*.js",
-    "prepublish": "npm lint && npm test && npm run build;"
+    "prepublish": "npm run lint && npm test && npm run build;"
   },
   "repository": {
     "type": "git",
