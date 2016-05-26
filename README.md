@@ -39,81 +39,27 @@ ignite.start(tasks, options);
 
 ## usage
 
+Run browserify on src files.
+
 ```bash
-$ gulp browserify --watch --min --sourcemap
+$ gulp browserify --watch
 ```
 
-### available runtime overrides
+##### arguments
+- `--min, -m` - Uglify the output.
+- `--sourcemap, -s` - Enable or Disable sourcemaps (true|false).
+- `--watch, -w` - Watch files for changes and trigger sass.
 
-* --watch
-* --min
-* --sourcemap
-
-
-## options
-
-### src
-
-**Type:** `String`  
-**Default:** `./client/app/app.js`
-
-The source file that should be used as the main entry point for your app.
-
-### dest
-
-**Type:** `String`  
-**Default:** `./public/js`
-
-The destination directory where the bundle should be output to.
-
-### filename
-
-**Type:** `String`  
-**Default:** `app.js`
-
-The filename of the bundled output.
-
-### options
-
-**Type:** `Array`  
-**Default:** `[]`
-
-Options to pass through to browserify. Check out [browserify options](https://github.com/substack/node-browserify#browserifyfiles--opts) to see the full list.
-
-### min
-
-**Type:** `Boolean`  
-**Default:** `false`
-
-Whether or not to uglify.
-
-### sourcemap
-
-**Type:** `Boolean`  
-**Default:** `false`
-
-Whether or not to include sourcemap.
-
-### watch
-
-**Type:** `Boolean`  
-**Default:** `false`
-
-Whether or not to watch for file changes.
-
-### watchFiles
-
-**Type:** `Array`  
-**Default:** `[]`
-
-Files to watch for changes.
-
-### deps
-
-**Type:** `Array`  
-**Default:** `[]`
-
-Any gulp tasks that browserify would be dependent of.
+##### options
+- `src` - The source file that should be used as the main entry point for your app. (**Default:** `['./client/app/app.js']`)
+- `dest` - The destination directory where the bundle should be output to. (**Default:** `'./public/js'`)
+- `filename` - The filename of the bundled output. (**Default:** `'app.js'`)
+- `options` - Options to pass through to browserify. Check out [browserify options](https://github.com/substack/node-browserify#browserifyfiles--opts) to see the full list. (**Default:** `[]`)
+- `min` - Whether or not to uglify. (**Default:** `false`)
+- `sourcemap` - Whether or not to include sourcemap. (**Default:** `false`)
+- `watch` - Whether or not to watch for file changes. (**Default:** `false`)
+- `watchFiles` - Files to watch for changes. (**Default:** `[]`)
+- `deps` - Any gulp tasks that task would be dependent of. (**Default:** `[]`)
 
 ## license
 
