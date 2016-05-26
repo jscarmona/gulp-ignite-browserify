@@ -53,9 +53,9 @@ export default {
    * @return {Object}
    */
   fn(config, end, error) {
-    const min = yargs.argv.min || config.min;
-    const sourcemap = yargs.argv.sourcemap || config.sourcemap;
-    const watch = yargs.argv.watch || config.watch;
+    const min = yargs.argv.min || yargs.argv.m || config.min;
+    const sourcemap = yargs.argv.sourcemap || yargs.argv.s || config.sourcemap;
+    const watch = yargs.argv.watch || yargs.argv.w || config.watch;
     const filename = config.filename || path.basename(config.src);
 
     if (watch) {
