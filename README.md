@@ -53,7 +53,7 @@ $ gulp browserify --watch
 ##### options
 - `src` - The source file that should be used as the main entry point for your app. (**Default:** `['./client/app/app.js']`)
 - `dest` - The destination directory where the bundle should be output to. (**Default:** `'./public/js'`)
-- `filename` - The filename of the bundled output. (**Default:** `'app.js'`)
+- `filename` - The filename of the bundled output. (**Default:** filename of src)
 - `options` - Options to pass through to browserify. Check out [browserify options](https://github.com/substack/node-browserify#browserifyfiles--opts) to see the full list. (**Default:** `[]`)
 - `min` - Whether or not to uglify. (**Default:** `false`)
 - `sourcemap` - Whether or not to include sourcemap. (**Default:** `false`)

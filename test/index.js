@@ -1,6 +1,3 @@
-/* jshint -W030 */
-'use strict';
-
 import chai from 'chai';
 import task from '../src';
 
@@ -37,7 +34,7 @@ describe('Browserify Task', () => {
     });
 
     it('should contain a `filename` property', () => {
-      expect(task.config.filename).to.be.a('string');
+      expect(task.config.filename).to.be.a('null');
     });
 
     it('should contain a `options` property', () => {

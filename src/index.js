@@ -29,8 +29,8 @@ export default {
   config: {
     src: './client/app/app.js',
     dest: './public/js',
-    filename: 'app.js',
     options: [],
+    filename: null,
     min: false,
     sourcemap: false,
     watch: false,
@@ -56,6 +56,7 @@ export default {
     const min = yargs.argv.min || config.min;
     const sourcemap = yargs.argv.sourcemap || config.sourcemap;
     const watch = yargs.argv.watch || config.watch;
+    const filename = config.filename || path.basename(config.src);
 
     if (watch) {
       gulp.watch(config.watchFiles, (file) => {
@@ -76,7 +77,7 @@ export default {
       return browserify(config.src, config.options)
         .bundle()
           .on('error', error)
-        .pipe(source(config.filename))
+        .pipe(source(filename))
         .pipe(buffer())
         .pipe(gulpIf(sourcemap, sourcemaps.init({ loadMaps: true })))
           .pipe(gulpIf(min, uglify()))
