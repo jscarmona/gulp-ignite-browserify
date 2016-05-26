@@ -5,7 +5,9 @@ import yargs from 'yargs';
 import gulp from 'gulp';
 import gulpIf from 'gulp-if';
 import sourcemaps from 'gulp-sourcemaps';
+import path from 'path';
 import uglify from 'gulp-uglify';
+import { IGNITE_UTILS } from 'gulp-ignite/utils';
 
 export default {
   /**
@@ -56,18 +58,30 @@ export default {
     const watch = yargs.argv.watch || config.watch;
 
     if (watch) {
-      gulp.watch(config.watchFiles, ['browserify']);
+      gulp.watch(config.watchFiles, (file) => {
+        const startTime = IGNITE_UTILS.startTime();
+
+        IGNITE_UTILS.log(`browserify => ${path.basename(file.path)}`);
+
+        compile()
+          .on('end', () => {
+            IGNITE_UTILS.notify(`browserify complete --- ${IGNITE_UTILS.getDuration(startTime)}`);
+          });
+      });
     }
 
-    browserify(config.src, config.options)
-      .bundle()
-        .on('error', error)
-      .pipe(source(config.filename))
-      .pipe(buffer())
-      .pipe(gulpIf(sourcemap, sourcemaps.init({ loadMaps: true })))
-        .pipe(gulpIf(min, uglify()))
-      .pipe(gulpIf(sourcemap, sourcemaps.write('./')))
-      .pipe(gulp.dest(config.dest))
-        .on('end', end);
+    compile().on('end', end);
+
+    function compile() {
+      return browserify(config.src, config.options)
+        .bundle()
+          .on('error', error)
+        .pipe(source(config.filename))
+        .pipe(buffer())
+        .pipe(gulpIf(sourcemap, sourcemaps.init({ loadMaps: true })))
+          .pipe(gulpIf(min, uglify()))
+        .pipe(gulpIf(sourcemap, sourcemaps.write('./')))
+        .pipe(gulp.dest(config.dest));
+    }
   },
 };
