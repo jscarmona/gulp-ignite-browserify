@@ -1,7 +1,7 @@
 {
   "name": "gulp-ignite-browserify",
   "description": "A gulp ignite task for browserifing your javascript.",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "main": "index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register",
