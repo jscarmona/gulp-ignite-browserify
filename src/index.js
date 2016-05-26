@@ -1,5 +1,3 @@
-'use strict';
-
 import browserify from 'browserify';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
@@ -53,11 +51,11 @@ export default {
    * @return {Object}
    */
   fn(config, end, error) {
-    config.min = yargs.argv.min || config.min;
-    config.sourcemap = yargs.argv.sourcemap || config.sourcemap;
-    config.watch = yargs.argv.watch || config.watch;
+    const min = yargs.argv.min || config.min;
+    const sourcemap = yargs.argv.sourcemap || config.sourcemap;
+    const watch = yargs.argv.watch || config.watch;
 
-    if (config.watch) {
+    if (watch) {
       gulp.watch(config.watchFiles, ['browserify']);
     }
 
@@ -66,10 +64,10 @@ export default {
         .on('error', error)
       .pipe(source(config.filename))
       .pipe(buffer())
-      .pipe(gulpIf(config.sourcemap, sourcemaps.init({ loadMaps: true })))
-        .pipe(gulpIf(config.min, uglify()))
-      .pipe(gulpIf(config.sourcemap, sourcemaps.write('./')))
+      .pipe(gulpIf(sourcemap, sourcemaps.init({ loadMaps: true })))
+        .pipe(gulpIf(min, uglify()))
+      .pipe(gulpIf(sourcemap, sourcemaps.write('./')))
       .pipe(gulp.dest(config.dest))
         .on('end', end);
-  }
+  },
 };

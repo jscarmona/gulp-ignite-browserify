@@ -7,7 +7,8 @@
     "test": "mocha --compilers js:babel-core/register",
     "test:watch": "mocha --compilers js:babel-core/register -w",
     "build": "babel src -d ./",
-    "prepublish": "npm test; npm run build;"
+    "lint": "eslint ./src/**/*.js",
+    "prepublish": "npm lint && npm test && npm run build;"
   },
   "repository": {
     "type": "git",
@@ -44,6 +45,9 @@
     "chai": "3.5.0",
     "commitizen": "2.6.1",
     "cz-conventional-changelog": "1.1.5",
+    "eslint": "2.10.1",
+    "eslint-config-airbnb-base": "3.0.1",
+    "eslint-plugin-import": "1.8.0",
     "ghooks": "1.0.3",
     "mocha": "2.4.5"
   },

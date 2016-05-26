@@ -1,4 +1,4 @@
 /node_modules
+/npm-debug.log
 /index.js
-npm-debug.log
 .DS_Store
