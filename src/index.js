@@ -31,6 +31,7 @@ export default {
     dest: './public/js',
     options: [],
     filename: null,
+    exitOnFail: true,
     min: false,
     sourcemap: false,
     watch: false,
@@ -62,10 +63,9 @@ export default {
       gulp.watch(config.watchFiles, (file) => {
         const startTime = IGNITE_UTILS.startTime();
 
-        IGNITE_UTILS.log(`browserify => ${path.basename(file.path)}`);
-
         compile()
           .on('end', () => {
+            IGNITE_UTILS.log(`browserify => ${path.basename(file.path)}`);
             IGNITE_UTILS.notify(`browserify complete --- ${IGNITE_UTILS.getDuration(startTime)}`);
           });
       });
@@ -76,7 +76,7 @@ export default {
     function compile() {
       return browserify(config.src, config.options)
         .bundle()
-          .on('error', error)
+          .on('error', (e) => error(e.message, config.exitOnFail))
         .pipe(source(filename))
         .pipe(buffer())
         .pipe(gulpIf(sourcemap, sourcemaps.init({ loadMaps: true })))

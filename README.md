@@ -55,6 +55,7 @@ $ gulp browserify --watch
 - `dest` - The destination directory where the bundle should be output to. (**Default:** `'./public/js'`)
 - `filename` - The filename of the bundled output. (**Default:** filename of src)
 - `options` - Options to pass through to browserify. Check out [browserify options](https://github.com/substack/node-browserify#browserifyfiles--opts) to see the full list. (**Default:** `[]`)
+- `exitOnFail` - Whether or not to exit on fail. (**Default:** `true`)
 - `min` - Whether or not to uglify. (**Default:** `false`)
 - `sourcemap` - Whether or not to include sourcemap. (**Default:** `false`)
 - `watch` - Whether or not to watch for file changes. (**Default:** `false`)
