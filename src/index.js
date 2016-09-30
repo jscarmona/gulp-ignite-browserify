@@ -1,7 +1,6 @@
 import browserify from 'browserify';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
-import yargs from 'yargs';
 import gulp from 'gulp';
 import gulpIf from 'gulp-if';
 import sourcemaps from 'gulp-sourcemaps';
@@ -34,19 +33,13 @@ export default {
     exitOnFail: true,
     min: false,
     sourcemap: false,
-    watch: false,
-    watchFiles: [],
   },
 
   /**
    * Task help options
    * @type {Object}
    */
-  help: {
-    'min, -m': 'Compress and minify the output (true|false). Default: false',
-    'sourcemap, -s': 'Enable or Disable sourcemaps (true|false). Default: false',
-    'watch, -w': 'Watch files for changes and trigger browsersync',
-  },
+  help: {},
 
   /**
    * Task function
@@ -54,35 +47,17 @@ export default {
    * @return {Object}
    */
   fn(config, end, error) {
-    const min = yargs.argv.min || yargs.argv.m || config.min;
-    const sourcemap = yargs.argv.sourcemap || yargs.argv.s || config.sourcemap;
-    const watch = yargs.argv.watch || yargs.argv.w || config.watch;
     const filename = config.filename || path.basename(config.src);
 
-    if (watch) {
-      gulp.watch(config.watchFiles, (file) => {
-        const startTime = IGNITE_UTILS.startTime();
-
-        compile()
-          .on('end', () => {
-            IGNITE_UTILS.log(`browserify => ${path.basename(file.path)}`);
-            IGNITE_UTILS.notify(`browserify complete --- ${IGNITE_UTILS.getDuration(startTime)}`);
-          });
-      });
-    }
-
-    compile().on('end', end);
-
-    function compile() {
-      return browserify(config.src, config.options)
-        .bundle()
-          .on('error', (e) => error(e.message, config.exitOnFail))
-        .pipe(source(filename))
-        .pipe(buffer())
-        .pipe(gulpIf(sourcemap, sourcemaps.init({ loadMaps: true })))
-          .pipe(gulpIf(min, uglify()))
-        .pipe(gulpIf(sourcemap, sourcemaps.write('./')))
-        .pipe(gulp.dest(config.dest));
-    }
+    return browserify(config.src, config.options)
+      .bundle()
+        .on('error', (e) => error(e.message, config.exitOnFail))
+      .pipe(source(filename))
+      .pipe(buffer())
+      .pipe(gulpIf(config.sourcemap, sourcemaps.init({ loadMaps: true })))
+        .pipe(gulpIf(config.min, uglify()))
+      .pipe(gulpIf(config.sourcemap, sourcemaps.write('./')))
+      .pipe(gulp.dest(config.dest))
+        .on('end', () => IGNITE_UTILS.notify('Browserify Complete'));
   },
 };
