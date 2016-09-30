@@ -31,7 +31,7 @@ watch('scripts:watch', './src/**/*.js', ['scripts']);
 Run browserify on src files.
 
 ```bash
-$ gulp browserify
+$ gulp scripts
 ```
 
 ##### options
